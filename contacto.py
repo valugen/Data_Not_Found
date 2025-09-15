@@ -31,14 +31,6 @@ class Contacto:
         self.id_contacto = cursor.lastrowid  # genera el id automático
         self._cerrar(conexion)
 
-        conexion, cursor = self._conectar()
-        cursor.execute(
-            "INSERT INTO Contactos (nombre, apellido, telefono, email) VALUES (?, ?, ?, ?)",
-            (self.nombre, self.apellido, self.telefono, self.email)
-        )  # uso ? para prevenir inyecciones SQL
-
-        self.id_contacto = cursor.lastrowid  # genera el id automático
-        self._cerrar(conexion)
 # Método para modificar contactos
     def modificar(self):
         conexion, cursor = self._conectar()
@@ -63,3 +55,4 @@ class Contacto:
         cursor.execute("SELECT * FROM Contactos")
         contactos = cursor.fetchall()  # trae todos los registros como lista de tuplas
         self._cerrar(conexion)
+

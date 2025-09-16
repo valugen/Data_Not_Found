@@ -2,12 +2,12 @@ import sqlite3  # Importar sqlite3
 
 class Contacto:
     # Constructor
-    def __init__(self, nombre, apellido, telefono, email, id_contacto=None):
+    def __init__(self, nombre, apellido, telefono, email, dni =None):
         self.nombre = nombre
         self.apellido = apellido
         self.telefono = telefono
         self.email = email
-        self.id_contacto = id_contacto
+        self.dni = dni
 
     # Método privado para conectar a la base de datos
     def _conectar(self):
@@ -24,7 +24,7 @@ class Contacto:
     def agregar(self):
         conexion, cursor = self._conectar()
         cursor.execute(
-            "INSERT INTO Contactos (nombre, apellido, telefono, email) VALUES (?, ?, ?, ?)",
+            "INSERT INTO Contactos (dni, nombre, apellido, telefono, email) VALUES (?, ?, ?, ?, ?)",
             (self.nombre, self.apellido, self.telefono, self.email)
         )  # uso ? para prevenir inyecciones SQL
 
@@ -35,8 +35,8 @@ class Contacto:
     def modificar(self):
         conexion, cursor = self._conectar()
         cursor.execute(
-            "UPDATE Contactos SET nombre=?, apellido=?, telefono=?, email=? WHERE id_contacto=?",
-            (self.nombre, self.apellido, self.telefono, self.email, self.id_contacto)
+            "UPDATE Contactos SET nombre=?, apellido=?, telefono=?, email=? WHERE dni=?",
+            (self.nombre, self.apellido, self.telefono, self.email, self.dni)
         )
         self._cerrar(conexion)
 
@@ -44,8 +44,8 @@ class Contacto:
     def eliminar(self):
         conexion, cursor = self._conectar()
         cursor.execute(
-            "DELETE FROM Contactos WHERE id_contacto=?",
-            (self.id_contacto,)
+            "DELETE FROM Contactos WHERE dni=?",
+            (self.dni,)
         )
         self._cerrar(conexion)
 
@@ -55,4 +55,5 @@ class Contacto:
         cursor.execute("SELECT * FROM Contactos")
         contactos = cursor.fetchall()  # trae todos los registros como lista de tuplas
         self._cerrar(conexion)
+
 

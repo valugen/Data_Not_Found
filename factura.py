@@ -1,9 +1,9 @@
 import sqlite3  # Importar sqlite3
 
 class Factura:
-    def __init__(self, id_contacto, monto, fecha, id_factura=None):
+    def __init__(self, dni, monto, fecha, id_factura=None):
         self.id_factura = id_factura
-        self.id_contacto = id_contacto
+        self.dni = dni
         self.monto = monto
         self.fecha = fecha
 
@@ -22,9 +22,10 @@ class Factura:
     def agregar(self):
         conexion, cursor = self._conectar()
         cursor.execute(
-            "INSERT INTO Factura (id_contacto, monto, fecha) VALUES (?, ?, ?)",
-            (self.id_contacto, self.monto, self.fecha)
+        "INSERT INTO Factura (dni, monto, fecha) VALUES (?, ?, ?)",
+        (self.dni, self.monto, self.fecha)
         )
+
         self.id_factura = cursor.lastrowid
         self._cerrar(conexion)
       # uso ? para prevenir inyecciones SQL
@@ -33,9 +34,10 @@ class Factura:
     def modificar(self):
         conexion, cursor = self._conectar()
         cursor.execute(
-            "UPDATE Factura SET id_contacto=?, monto=?, fecha=? WHERE id_factura=?",
-            (self.id_contacto, self.monto, self.fecha, self.id_factura)
+        "UPDATE Factura SET dni=?, monto=?, fecha=? WHERE id_factura=?",
+        (self.dni, self.monto, self.fecha, self.id_factura)
         )
+
         self._cerrar(conexion)
 
     # Método para eliminar factura
@@ -54,3 +56,4 @@ class Factura:
         facturas = cursor.fetchall()
         self._cerrar(conexion)
         return facturas
+

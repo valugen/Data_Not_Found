@@ -1,15 +1,13 @@
 #Creamos un archivo distinto para crear la tabla de base de datos
-
 import sqlite3
-
-#conectamos
+#Conectamos
 conexion = sqlite3.connect("contactos.db")
 cursor = conexion.cursor()
 
 #sentencia DDL para crear tabla contactos
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS Contactos (
-    id_contacto INTEGER PRIMARY KEY AUTOINCREMENT,
+    dni TEXT PRIMARY KEY,
     nombre TEXT NOT NULL,
     apellido TEXT NOT NULL,
     telefono TEXT NOT NULL,
@@ -17,19 +15,18 @@ CREATE TABLE IF NOT EXISTS Contactos (
 )
 """)
 
-#sentencia DDL para crear tabla contactos
+#sentencia DDL para crear tabla factura
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS Factura (
     id_factura INTEGER PRIMARY KEY AUTOINCREMENT,
-    id_contacto INTEGER NOT NULL,
+    dni TEXT NOT NULL,
     monto REAL NOT NULL,
     fecha TEXT NOT NULL,
-    FOREIGN KEY (id_contacto) REFERENCES Contactos (id_contacto)
+    FOREIGN KEY (dni) REFERENCES Contactos (dni)
 )
 """)
 
 conexion.commit()
 conexion.close()
 
-print("Tabla Contactos creada correctamente")
-
+print("Tablas Contactos y Factura creadas correctamente")

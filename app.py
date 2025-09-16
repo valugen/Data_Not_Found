@@ -193,7 +193,7 @@ class AppContactos:
 
         factura = Factura(self.id_contacto, 0, "")
         conexion, cursor = factura._conectar()
-        cursor.execute("SELECT * FROM Factura WHERE id_contacto=?", (self.id_contacto,))
+        cursor.execute("SELECT * FROM Factura WHERE dni=?", (dni,))
         facturas = cursor.fetchall()
         factura._cerrar(conexion)
 
